@@ -6,11 +6,11 @@ import joblib
 import os
 
 def prepare_data(df):
-  X = df.drop("y", axis=1)
+  x= df.drop("y", axis=1)
 
   y = df["y"]
 
-  return X, y
+  return x, y
 
 def save_model(model, filename):
   model_dir = "models"

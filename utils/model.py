@@ -6,7 +6,7 @@ class Perceptron :
         self.epoch=epoch
     
     def activation(self,weights,inputs):
-        z = np.dot(self.weights,inputs)#Z=W*X
+        z = np.dot(inputs,self.weights)#Z=W*X
         return np.where(z>0,1,0)
     def fit(self,x,y):
         self.x = x
@@ -21,10 +21,10 @@ class Perceptron :
             self.error = self.y-y_hat
             print(f'error-->   {self.error}')
             self.weights = self.weights+self.eta*np.dot(x_with_bias.T,self.error)#backward prop
-            print(f"updated weights after epoch:\n{self.epoch}/{self.epochs} : \n{self.weights}")
+            print(f"updated weights after epoch:\n{self.epoch}/{self.epoch} : \n{self.weights}")
     
     def predict(self,x):
-        x_with_bias = np.c_[self.x,-np.ones((len(self.x),1))]
+        x_with_bias = np.c_[x,-np.ones((len(self.x),1))]
         return self.activation(self.weights,x_with_bias)
     def total_loss(self):
         total_loss = np.sum(self.error)
