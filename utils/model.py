@@ -1,9 +1,11 @@
 import numpy as np
+import logging as lg
+from tqdm import tqdm
 class Perceptron :
     def __init__(self,eta,epoch):
         self.weights = np.random.randn(3)*1e-4
         self.eta=eta
-        self.epoch=epoch
+        self.epoch=epoch    
     
     def activation(self,weights,inputs):
         z = np.dot(inputs,self.weights)#Z=W*X
@@ -12,23 +14,23 @@ class Perceptron :
         self.x = x
         self.y = y
         x_with_bias = np.c_[self.x,-np.ones((len(self.x),1))]
-        print(f"X with bias: \n{x_with_bias}")
-        for i in range(self.epoch):
-            print('*'*10)
-            print(f'epoch-  {i}')
-            print('*'*10)
+        lg.info(f"X with bias: \n{x_with_bias}")
+        for i in tqdm( range(self.epoch), total = self.epoch,desc = "training the model"):
+            lg.info('*'*10)
+            lg.info(f'epoch-  {i}')
+            lg.info('*'*10)
             y_hat = self.activation(self.weights,x_with_bias)#forward prop
             self.error = self.y-y_hat
-            print(f'error-->   {self.error}')
+            lg.info(f'error-->   {self.error}')
             self.weights = self.weights+self.eta*np.dot(x_with_bias.T,self.error)#backward prop
-            print(f"updated weights after epoch:\n{self.epoch}/{self.epoch} : \n{self.weights}")
+            lg.info(f"updated weights after epoch:\n{self.epoch}/{self.epoch} : \n{self.weights}")
     
     def predict(self,x):
         x_with_bias = np.c_[x,-np.ones((len(self.x),1))]
         return self.activation(self.weights,x_with_bias)
     def total_loss(self):
         total_loss = np.sum(self.error)
-        print(f"total loss: {total_loss}")
+        lg.info(f"total loss: {total_loss}")
         return total_loss
 
 

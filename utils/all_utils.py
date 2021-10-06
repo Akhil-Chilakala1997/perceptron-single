@@ -6,6 +6,7 @@ import joblib
 import os
 
 def prepare_data(df):
+  
   x= df.drop("y", axis=1)
 
   y = df["y"]
@@ -17,3 +18,4 @@ def save_model(model, filename):
   os.makedirs(model_dir, exist_ok=True) # ONLY CREATE IF MODEL_DIR DOESN"T EXISTS
   filePath = os.path.join(model_dir, filename) # model/filename
   joblib.dump(model, filePath)
+  
